@@ -1,0 +1,131 @@
+.layout-comp {
+  position: relative;
+  width: 100%;
+  min-height: 20px;
+
+  &.preview {
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 99;
+      cursor: pointer;
+    }
+  }
+
+  &.ghost {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    background: url('../images/bg-ghost.png') no-repeat center;
+    background-size: cover;
+
+    &.disabled {
+      background-image: url('../images/bg-ghost-disabled.png');
+
+      &:after {
+        content: '组件放置已达上限';
+        background-color: #FD8B5C;
+      }
+    }
+    
+    *,
+    .comp-delete,
+    .comp-name {
+      display: none !important;
+    }
+  
+    &:after {
+      display: block;
+      content: '组件放置区域';
+      width: 120px;
+      height: 32px;
+      border-radius: 3px;
+      background-color: #409eff;
+      text-align: center;
+      line-height: 32px;
+      font-size: 14px;
+      color: #fff;
+    }
+  }
+
+  &.active {
+    &:before {
+      border: 1.5px solid #155bd4;
+    }
+
+    .comp-delete {
+      display: block;
+    }
+  }
+
+  .comp-delete,
+  .comp-name {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    height: 24px;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .comp-delete {
+    right: -30px;
+    display: none;
+    width: 30px;
+    background: #fff url('../images/icon-delete.png') no-repeat center;
+    background-size: 20px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0);
+  }
+
+  .comp-name {
+    left: -106px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+    background-color: #fff;
+    pointer-events: none;
+
+    >span {
+      display: block;
+      width: 100px;
+      padding: 0 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 7px;
+      right: -9px;
+      width: 0;
+      height: 0;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent #fff;
+    }
+  }
+}
+
+.footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 375px;
+  height: 100px;
+  margin: 0 auto;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, .1);
+  background-color: #f8f8f8;
+}
