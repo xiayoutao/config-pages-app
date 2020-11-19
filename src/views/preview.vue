@@ -25,7 +25,7 @@
 import components from '@/components';
 import { postMessage } from '@/scripts/tools';
 import { getUUID } from '@/scripts/utils';
-import { nextTick, onMounted, ref, watch } from 'vue';
+import { nextTick, onMounted, ref, toRaw, watch } from 'vue';
 
 export default {
   name: 'preview',
@@ -55,9 +55,9 @@ export default {
     // 获取所有组件offsetTop值
     async function countAllCount () {
       await nextTick();
-      console.log('countAllCount', layoutComp.value);
       let allHeight = 0;
       layoutComp.value.forEach((item, index) => {
+        console.log(item);
         layouts.value[index].offsetTop = item.offsetTop;
         layouts.value[index].height = item.offsetHeight;
         allHeight += item.offsetHeight;
@@ -71,7 +71,6 @@ export default {
 
     // 接收消息
     function receiveMessageHandle (data) {
-      console.log('receiveMessage', data);
       if (data.type === 'config') { // 页面信息
         pageConfig.value = { ...data.config };
       } else if (data.type === 'layouts') { // 布局信息
@@ -119,7 +118,7 @@ export default {
         });
         postMessageHandle({
           type: 'updateLayouts',
-          layouts: layouts.value,
+          layouts: toRaw(layouts.value),
         });
         countAllCount();
       }
@@ -161,7 +160,7 @@ export default {
       layouts.value.splice(index, 1);
       postMessageHandle({
         type: 'updateLayouts',
-        layouts: [ ...layouts.value ],
+        layouts: toRaw(layouts.value),
       });
       if (layouts.value.length > 0) {
         selectedIndex.value = index - 1 >= 0 ? index - 1 : 0;
