@@ -71,7 +71,6 @@ export default {
 
     // 接收消息
     function receiveMessageHandle (data) {
-      console.log(1, data);
       try {
         if (typeof data === 'string') {
           data = JSON.parse(data);
@@ -79,7 +78,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      console.log(2, data);
       if (data.type === 'config') { // 页面信息
         pageConfig.value = { ...data.config };
       } else if (data.type === 'layouts') { // 布局信息
