@@ -22,38 +22,7 @@ module.exports = {
       }
     }
   },
-  configureWebpack: config => {
-    config.optimization = {
-      splitChunks: {
-        chunks: 'async',
-        minSize: 30000,
-        maxSize: 0,
-        minChunks: 1,
-        maxAsyncRequests: 5,
-        maxInitialRequests: 3,
-        automaticNameDelimiter: '~',
-        name: true,
-        cacheGroups: {
-          vendors: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10
-          },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true
-          },
-          vant: {
-            name: 'vant', // 单独将 vant 拆包
-            priority: 1000, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
-            test: /[\\/]node_modules[\\/]vant[\\/]/,
-            chunks: 'all',
-            reuseExistingChunk: true
-          },
-        }
-      },
-    };
-  },
+  configureWebpack: {},
   chainWebpack: config => {
     config.plugins.delete('preload');
     config.plugins.delete('prefetch');
