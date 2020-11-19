@@ -28,7 +28,8 @@ module.exports = {
     config.plugins.delete('prefetch');
 
     config.resolve.alias
-      .set('@', resolve('src'));
+      .set('@', resolve('src'))
+      .set('@cps', resolve('src/components'));
 
     config.module
       .rule('images')
