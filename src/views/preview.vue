@@ -71,6 +71,13 @@ export default {
 
     // 接收消息
     function receiveMessageHandle (data) {
+      try {
+        if (typeof data === 'string') {
+          data = JSON.parse(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
       if (data.type === 'config') { // 页面信息
         pageConfig.value = { ...data.config };
       } else if (data.type === 'layouts') { // 布局信息
