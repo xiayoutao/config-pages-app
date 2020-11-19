@@ -16,12 +16,12 @@ import defaultAdImage from '@/assets/images/default-ad.png';
 export default {
   name: 'x-image-ad',
   props: {
-    data: Array,
+    data: Object,
   },
   setup (props) {
     const dataList = computed(() => {
-      if (props.data instanceof Array) {
-        return [ ...props.data ];
+      if (props.data instanceof Object) {
+        return [ ...(props.data.ad || []) ];
       }
       return [];
     });

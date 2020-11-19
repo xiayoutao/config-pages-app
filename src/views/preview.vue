@@ -158,6 +158,7 @@ export default {
     // 删除单个组件
     function deleteSingleCpsHandle (index) {
       layouts.value.splice(index, 1);
+      layoutComp.value.splice(index, 1);
       postMessageHandle({
         type: 'updateLayouts',
         layouts: toRaw(layouts.value),
