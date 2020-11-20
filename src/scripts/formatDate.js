@@ -74,9 +74,7 @@ export function timestampFormatToHms(timestamp, curTimestamp) {
   var timestampDiff = curTimestamp - timestamp; // 参数时间戳与当前时间戳相差秒数
   var r = 0;
   var tmDate = new Date(timestamp); // 参数时间戳转换成的日期对象
-  var y = tmDate.getFullYear(),
-    M = tmDate.getMonth() + 1,
-    d = tmDate.getDate(),
+  var d = tmDate.getDate(),
     H = tmDate.getHours(),
     m = tmDate.getMinutes(),
     s = tmDate.getSeconds();

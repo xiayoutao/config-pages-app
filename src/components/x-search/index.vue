@@ -8,9 +8,13 @@
 
 <script>
 import { computed } from 'vue';
+import { Search } from 'vant';
 
 export default {
   name: 'x-search',
+  components: {
+    VanSearch: Search,
+  },
   props: {
     data: Object,
   },
@@ -26,7 +30,7 @@ export default {
       align,
       placeholder,
     }
-  }
+  },
 }
 </script>
 
