@@ -1,13 +1,12 @@
-// import Vue from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import {
   siteName
 } from '@/constants';
 
-import Preview from '@/views/preview.vue';
-import Show from '@/views/show.vue';
+// import Preview from '@/views/preview.vue';
+// import Show from '@/views/show.vue';
 // const Layout = () => import('@/views/layout.vue');
-// const importPage = view => () => import(`@/views/${view}.vue`);
+const importPage = view => () => import(`@/views/${view}.vue`);
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,13 +17,11 @@ const router = createRouter({
     },
     {
       path: '/preview',
-      // component: importPage('preview'),
-      component: Preview,
+      component: importPage('preview'),
     },
     {
       path: '/show',
-      // component: importPage('show'),
-      component: Show,
+      component: importPage('show'),
     }
   ]
 });

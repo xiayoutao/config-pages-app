@@ -1,6 +1,6 @@
 <template>
 <div class="page-wrap">
-  <div class="main" :style="{backgroundColor: pageConfig.bgColor}" :data-id="pageConfig.bgColor">
+  <div class="main" :style="{backgroundColor: pageConfig.bgColor}">
     <div style="min-height: 603px">
       <div
         :ref="el => { if (el) layoutComp[index] = el }"
@@ -8,7 +8,7 @@
         v-for="(item, index) in layouts"
         :key="item.name + Math.floor(Math.random() * 10000) + Date.now()"
         :class="[{active: selectedIndex === index}, {ghost: item.drag}, {disabled: item.disabled}]"
-        @click="singleCompSelectedHandle(index)"
+        @click="selectedIndex = index"
       >
         <component :is="item.name" :data="item.data"></component>
         <p class="comp-delete" @click.stop="deleteSingleCpsHandle(index)"></p>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { nextTick, onMounted, reactive, toRaw, toRefs, watch } from 'vue';
+import { nextTick, onMounted, ref, toRaw, watch } from 'vue';
 import components from '@/components';
 import { postMessage } from '@/scripts/tools';
 import { getUUID } from '@/scripts/utils';
@@ -33,13 +33,11 @@ export default {
     ...components,
   },
   setup() {
-    let state = reactive({
-      selectedIndex: null, // 选中的数组索引值
-      backupLayouts: [], // 备份的布局
-      layouts: [],
-      pageConfig: {},
-      layoutComp: [],
-    });
+    let selectedIndex = ref(null); // 选中的数组索引值
+    let backupLayouts = ref([]); // 备份的布局
+    let layouts = ref([]);
+    let pageConfig = ref({});
+    let layoutComp = ref([]);
 
     onMounted(() => {
       window.addEventListener('message', (event) => {
@@ -47,7 +45,7 @@ export default {
       });
     });
 
-    watch(() => state.selectedIndex, (val) => {
+    watch(selectedIndex, (val) => {
       postMessageHandle({
         type: 'updateSelectedIndex',
         index: val,
@@ -58,11 +56,10 @@ export default {
     async function countAllCount () {
       await nextTick();
       let allHeight = 0;
-      let layoutComp = toRaw(state.layoutComp);
-      layoutComp.forEach((item, index) => {
-        console.log('ddddddddddd', item, state.layouts[index]);
-        state.layouts[index].offsetTop = item.offsetTop;
-        state.layouts[index].height = item.offsetHeight;
+      layoutComp.value.forEach((item, index) => {
+        console.log(item);
+        layouts.value[index].offsetTop = item.offsetTop;
+        layouts.value[index].height = item.offsetHeight;
         allHeight += item.offsetHeight;
       });
       backupLayoutHandle(); // 备份布局数据
@@ -82,24 +79,23 @@ export default {
         console.log(error);
       }
       if (data.type === 'config') { // 页面信息
-        state.pageConfig = { ...data.config };
+        pageConfig.value = { ...data.config };
       } else if (data.type === 'layouts') { // 布局信息
-        let layouts = [];
+        let _layouts = [];
         data.layouts.forEach(item => {
-          layouts.push({
+          _layouts.push({
             ...item,
             data: item.data,
           });
         });
-
-        state.layouts = [ ...layouts ];
+        layouts.value = [ ..._layouts ];
         countAllCount();
       } else if (data.type === 'clearSelected') { // 清空选中组件
-        state.selectedIndex = null;
+        selectedIndex.value = null;
       } else if (data.type === 'layoutMoveOver') { // 拖拽到指定区域
         let activeIndex = -1;
         reductionLayoutHandle(); // 还原布局数据
-        state.layouts.some((item, index) => {
+        layouts.value.some((item, index) => {
           if (data.y >= item.offsetTop && data.y < item.offsetTop + item.height) {
             activeIndex = index;
           } else if (data.y <= item.offsetTop) {
@@ -114,22 +110,22 @@ export default {
           uuid: getUUID(),
         };
         if (activeIndex === -1) {
-          state.layouts.push(needAddCps);
-          activeIndex = state.layouts.length - 1;
+          layouts.value.push(needAddCps);
+          activeIndex = layouts.value.length - 1;
         } else {
-          state.layouts.splice(activeIndex, 0, needAddCps);
+          layouts.value.splice(activeIndex, 0, needAddCps);
         }
-        state.selectedIndex = activeIndex; // 新增的组件设置为选中状态
+        selectedIndex.value = activeIndex; // 新增的组件设置为选中状态
       } else if (data.type === 'layoutMoveOut') { // 拖拽到显示区域外面还原数据
         reductionLayoutHandle(); // 还原布局数据
       } else if (data.type === 'layoutChanged') { // 拖拽到显示区域并放开鼠标，布局改变
         filterLayoutHandle();
-        state.layouts.forEach((item, index) => {
-          state.layouts[index].drag = false;
+        layouts.value.forEach((item, index) => {
+          layouts.value[index].drag = false;
         });
         postMessageHandle({
           type: 'updateLayouts',
-          layouts: toRaw(state.layouts),
+          layouts: toRaw(layouts.value),
         });
         countAllCount();
       }
@@ -142,55 +138,53 @@ export default {
 
     // 过滤布局数据
     function filterLayoutHandle () {
-      let layouts = [];
-      state.layouts.forEach(item => {
+      let _layouts = [];
+      layouts.value.forEach(item => {
         if (!item.disabled) {
-          layouts.push({
+          _layouts.push({
             ...item,
           });
         }
       });
-      state.layouts = [ ...layouts ];
-      if (state.selectedIndex > layouts.length - 1) {
-        state.selectedIndex = layouts.length - 1;
+      layouts.value = [ ..._layouts ];
+      if (selectedIndex.value > _layouts.length - 1) {
+        selectedIndex.value = _layouts.length - 1;
       }
     }
 
     // 还原布局
     function reductionLayoutHandle () {
-      state.layouts = [ ...state.backupLayouts ];
+      layouts.value = [ ...backupLayouts.value ];
     }
 
     // 备份布局
     function backupLayoutHandle () {
-      state.backupLayouts = [ ...state.layouts ];
-    }
-
-    function singleCompSelectedHandle (index) {
-      state.selectedIndex = index;
+      backupLayouts.value = [ ...layouts.value ];
     }
 
     // 删除单个组件
     function deleteSingleCpsHandle (index) {
-      state.layouts.splice(index, 1);
-      state.layoutComp.splice(index, 1);
-
+      layouts.value.splice(index, 1);
+      layoutComp.value.splice(index, 1);
       postMessageHandle({
         type: 'updateLayouts',
-        layouts: toRaw(state.layouts),
+        layouts: toRaw(layouts.value),
       });
-      if (state.layouts.length > 0) {
-        state.selectedIndex = index - 1 >= 0 ? index - 1 : 0;
+      if (layouts.value.length > 0) {
+        selectedIndex.value = index - 1 >= 0 ? index - 1 : 0;
       } else {
-        state.selectedIndex = null;
+        selectedIndex.value = null;
       }
       countAllCount();
     }
 
     return {
-      singleCompSelectedHandle,
+      layoutComp,
+      selectedIndex,
+      backupLayouts,
+      layouts,
+      pageConfig,
       deleteSingleCpsHandle,
-      ...toRefs(state),
     }
   },
 };
