@@ -16,11 +16,6 @@ describe('xDivision', () => {
 
     await wrapper.vm.$nextTick();
 
-    // const search = wrapper.findComponent(Search);
-      
-    // expect(search.exists()).toBe(true);
-    // expect(search.props('placeholder')).toBeFalsy();
-
     expect(wrapper.exists()).toBe(true);
   });
 });
