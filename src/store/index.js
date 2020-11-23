@@ -1,31 +1,17 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
 import {
-  siteName,
-  version,
-  copyright,
+  iconfont,
+  tableEmptyText,
+  cdnUrl,
+  upload,
+  topWindowOrigin,
 } from '@/constants';
 
-Vue.use(Vuex);
-
-const modulesFiles = require.context('./modules', true, /\.js$/);
-const modules = modulesFiles
-  .keys()
-  .reduce((modules, modulePath) => {
-    const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1');
-    const value = modulesFiles(modulePath);
-    modules[moduleName] = value.default;
-    return modules;
-  }, {});
-
-export default new Vuex.Store({
-  state: {
-    siteName,
-    version,
-    copyright,
-  },
-  modules,
-  getters: {},
-  mutations: {},
-  strict: process.env.NODE_ENV !== 'production'
-});
+export default {
+  timestampDiff: 0, // 与服务器时间戳相差值，当前服务器时间 = new Date().getTime() + timestampDiff;
+  cdnUrl,
+  upload,
+  topWindowOrigin,
+  iconfont,
+  tableEmptyText, // 表格无数据显示内容
+  ajaxLoading: false, // ajax请求中
+};

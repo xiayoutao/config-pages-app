@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useRoute } from "vue-router";
+import { inject, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import components from '@/components';
 import { getPageLayout } from '@/apis/show';
 
@@ -28,6 +28,16 @@ export default {
     let pageConfig = ref({});
 
     const route = useRoute();
+
+    let store = inject('store');
+    
+    setTimeout(() => {
+      store.tableEmptyText = '百度一下';
+    }, 3000);
+
+    watch(store, () => {
+      console.log(store.tableEmptyText);
+    });
 
     handleGetPageLayout(route.query.uuid);
 

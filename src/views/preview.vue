@@ -60,7 +60,6 @@ export default {
       let allHeight = 0;
       let layoutComp = toRaw(state.layoutComp);
       layoutComp.forEach((item, index) => {
-        console.log('ddddddddddd', item, state.layouts[index]);
         state.layouts[index].offsetTop = item.offsetTop;
         state.layouts[index].height = item.offsetHeight;
         allHeight += item.offsetHeight;

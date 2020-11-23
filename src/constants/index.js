@@ -7,5 +7,5 @@ export const baseUrl = isProd ? 'https://api.xiayoutao.wang/api' : '';
 export const cdnUrl = isProd ? 'http://qiniu.xiayoutao.wang/' : 'http://test.xiayoutao.wang/';
 export const upload = '//up-z2.qiniup.com/';
 export const topWindowOrigin = isProd ? 'http://admin.xiayoutao.wang' : 'http://localhost:7000';
-export const tableEmptyText = '暂时没有内容显示';
+export const tableEmptyText = '暂时没有内容显示';  // 表格无数据显示内容
 export const iconfont = 'iconfont ';
