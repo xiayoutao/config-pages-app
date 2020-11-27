@@ -3,7 +3,7 @@ import {
 } from 'vue';
 import {
   topWindowOrigin,
-} from '@/constants';
+} from '@/common/constants';
 
 // 发送消息
 export function postMessage (theWindow, data, delay = 0, origin) {

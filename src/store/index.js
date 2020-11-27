@@ -4,7 +4,7 @@ import {
   cdnUrl,
   upload,
   topWindowOrigin,
-} from '@/constants';
+} from '@/common/constants';
 
 export default {
   timestampDiff: 0, // 与服务器时间戳相差值，当前服务器时间 = new Date().getTime() + timestampDiff;

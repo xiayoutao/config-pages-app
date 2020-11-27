@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import {
   siteName
-} from '@/constants';
+} from '@/common/constants';
 
 // import Preview from '@/views/preview.vue';
 // import Show from '@/views/show.vue';
