@@ -1,0 +1,25 @@
+.image-nav {
+  display: flex;
+  background-color: #fff;
+
+  &-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+
+    >.image {
+      display: block;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 10px;
+    }
+
+    >.title {
+      font-size: 14px;
+      color: #333;
+    }
+  }
+}

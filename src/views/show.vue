@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { inject, ref, watch } from 'vue';
+import { reactive, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import components from '@/components';
 import { getPageLayout } from '@/apis/show';
@@ -23,41 +23,32 @@ export default {
     ...components,
   },
   setup () {
-    let loading = ref(true);
-    let layouts = ref([]);
-    let pageConfig = ref({});
-
     const route = useRoute();
 
-    let store = inject('store');
-    
-    setTimeout(() => {
-      store.tableEmptyText = '百度一下';
-    }, 3000);
-
-    watch(store, () => {
-      console.log(store.tableEmptyText);
+    let state = reactive({
+      loading: false,
+      layouts: [],
+      pageConfig: {},
     });
 
     handleGetPageLayout(route.query.uuid);
 
     async function handleGetPageLayout (uuid) {
+      state.loading = true;
       const data = await getPageLayout({
         uuid
       });
-      loading.value = false;
+      state.loading = false;
       if (data) {
-        pageConfig.value = {...data.config};
-        layouts.value = [...data.layouts];
+        state.pageConfig = { ...data.config };
+        state.layouts = [ ...data.layouts ];
 
         document.title = data.config.title;
       }
     }
 
     return {
-      loading,
-      layouts,
-      pageConfig,
+      ...toRefs(state),
     };
   },
 };

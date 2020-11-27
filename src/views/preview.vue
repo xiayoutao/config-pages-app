@@ -1,6 +1,6 @@
 <template>
 <div class="page-wrap">
-  <div class="main" :style="{backgroundColor: pageConfig.bgColor}" :data-id="pageConfig.bgColor">
+  <div class="main" :style="{backgroundColor: pageConfig.bgColor}">
     <div style="min-height: 603px">
       <div
         :ref="el => { if (el) layoutComp[index] = el }"
@@ -24,8 +24,8 @@
 <script>
 import { nextTick, onMounted, reactive, toRaw, toRefs, watch } from 'vue';
 import components from '@/components';
-import { postMessage } from '@/scripts/tools';
-import { getUUID } from '@/scripts/utils';
+import { postMessage } from '@/common/tools';
+import { getUUID } from '@/common/utils';
 
 export default {
   name: 'preview',
