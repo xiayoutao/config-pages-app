@@ -1,6 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
 import merge from 'lodash/merge';
+import {
+  baseUrl,
+} from '@/common/constants';
 
 const http = axios.create({
   timeout: 1000 * 8,
@@ -41,9 +44,7 @@ http
  */
 http.adornUrl = (actionName) => {
   // 非生产环境 && 开启代理, 接口前缀统一使用[/api/]前缀做代理拦截!
-  return (process.env.NODE_ENV !== 'production'
-    ? '/api'
-    : window.SITE_CONFIG.baseUrl) + actionName;
+  return baseUrl + actionName;
 };
 
 /**

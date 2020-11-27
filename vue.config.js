@@ -15,8 +15,8 @@ module.exports = {
     port: 7002,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:1339',
-        // target: 'https://config.xiayoutao.wang',
+        // target: 'http://127.0.0.1:1339',
+        target: 'https://api-test.xiayoutao.wang',
         ws: true,
         changeOrigin: true
       }
