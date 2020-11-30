@@ -34,11 +34,10 @@ export default {
     handleGetPageLayout(route.query.uuid);
 
     async function handleGetPageLayout (uuid) {
-      state.loading = true;
       const data = await getPageLayout({
         uuid
       });
-      state.loading = false;
+      console.log(data);
       if (data) {
         state.pageConfig = { ...data.config };
         state.layouts = [ ...data.layouts ];

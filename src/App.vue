@@ -3,14 +3,8 @@
 </template>
 
 <script>
-import { provide, reactive } from 'vue';
-import store from '@/store';
-
 export default {
   name: 'App',
-  setup() {
-    provide('store', reactive(store));
-  }
 }
 </script>
 
