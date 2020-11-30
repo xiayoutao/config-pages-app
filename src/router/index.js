@@ -3,9 +3,6 @@ import {
   siteName
 } from '@/common/constants';
 
-// import Preview from '@/views/preview.vue';
-// import Show from '@/views/show.vue';
-// const Layout = () => import('@/views/layout.vue');
 const importPage = view => () => import(`@/views/${view}.vue`);
 
 const router = createRouter({
