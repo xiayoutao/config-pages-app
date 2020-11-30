@@ -25,7 +25,7 @@ export default {
               </div> : ''
             }
           </div>
-          { desc.value && <div class="title-desc" v-if="desc">{ desc.value }</div>}
+          { desc.value && <div class="title-desc">{ desc.value }</div>}
         </div>
       )
     }
