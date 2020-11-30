@@ -14,7 +14,7 @@ export default {
       return (
         <div class="x-notice notice">
           <van-notice-bar left-icon="volume-o" background={ background.value }>
-            <span style={ color }>{ message.value }</span>
+            <span style={{ color: color.value }}>{ message.value }</span>
           </van-notice-bar>
         </div>
       )

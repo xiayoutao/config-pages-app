@@ -39,11 +39,13 @@ module.exports = {
   },
   css: {
     loaderOptions: {
-      // less: {
-      //   modifyVars: {
-      //     hack: 'true; @import "~@/styles/less/variables.less";'
-      //   }
-      // },
+      less: {
+        lessOptions: {
+          modifyVars: {
+            hack: 'true; @import "~@/assets/styles/variables.less";'
+          }
+        },
+      },
       postcss: {
         plugins: [
           autoprefixer(),
