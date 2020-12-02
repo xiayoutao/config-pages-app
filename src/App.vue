@@ -1,0 +1,53 @@
+<template>
+  <router-view></router-view>
+</template>
+
+<script>
+export default {
+  name: 'App',
+};
+</script>
+
+<style lang="less">
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-size: 37.5px;
+}
+
+body {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+/*滚动条*/
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+
+  &-thumb {
+    background: rgba(0, 0, 0, .1);
+    border-radius: 20px;
+
+    &:hover {
+      background: rgba(#409eff, .5);
+    }
+
+    &:active {
+      background: rgba(#409eff, .8);
+    }
+  }
+
+  &-corner {
+    display: none;
+  }
+}
+</style>
