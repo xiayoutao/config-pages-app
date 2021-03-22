@@ -15,8 +15,8 @@ module.exports = {
     port: 7002,
     proxy: {
       '/api': {
-        // target: 'http://127.0.0.1:1339',
-        target: 'https://api-test.xiayoutao.wang',
+        target: 'http://127.0.0.1:1339',
+        // target: 'https://api-test.xiayoutao.wang',
         ws: true,
         changeOrigin: true
       }
@@ -35,7 +35,7 @@ module.exports = {
       .rule('images')
       .use('url-loader')
       .loader('url-loader')
-      .tap(options => Object.assign(options, {limit: 5120}));
+      .tap(options => Object.assign(options, { limit: 5120 }));
   },
   css: {
     loaderOptions: {
