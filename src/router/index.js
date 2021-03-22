@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import {
-  siteName
-} from '@/common/constants';
+import { siteName } from '@/common/constants';
 
 const importPage = view => () => import(`@/views/${view}.vue`);
 
@@ -9,16 +7,16 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/',
-      redirect: '/show',
-    },
-    {
       path: '/preview',
       component: importPage('preview'),
     },
     {
       path: '/show',
       component: importPage('show'),
+    },
+    {
+      path: '/panorama',
+      component: importPage('panorama'),
     }
   ]
 });
